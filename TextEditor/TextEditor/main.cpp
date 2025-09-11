@@ -1,17 +1,16 @@
 #include <windows.h>
 #include "resource.h"
 
-// -------------------- Глобальные переменные --------------------
-int idleSeconds = 0;           // Счётчик неактивности
+int idleSeconds = 0;          
 bool sc_showed = false;
-HINSTANCE g_hInstance = NULL;  // HINSTANCE приложения
+HINSTANCE g_hInstance = NULL; 
 
 LRESULT CALLBACK ScreenSaverProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
     static POINT ptSprite = { 100, 100 };
     static int dx = 5, dy = 5;
     static HBRUSH hBrush = NULL;
-    static POINT lastMouse = { -1, -1 }; // последняя позиция мыши
+    static POINT lastMouse = { -1, -1 };
 
     static HBITMAP hBitmap = NULL;
     static int bmpWidth = 0;
@@ -22,13 +21,13 @@ LRESULT CALLBACK ScreenSaverProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
     case WM_CREATE:
         hBrush = CreateSolidBrush(RGB(0, 0, 0));
         SetTimer(hwnd, 1, 30, NULL);
-        GetCursorPos(&lastMouse); // запомним позицию при старте
+        GetCursorPos(&lastMouse); 
 
         hBitmap = (HBITMAP)LoadImage(
-            NULL,                   // NULL — загружаем из файла, а не из ресурсов
+            NULL,                  
             L"sprite.bmp",
             IMAGE_BITMAP,
-            0, 0,                   // используем размеры оригинала
+            0, 0,                 
             LR_LOADFROMFILE);
 
         BITMAP bm;
@@ -135,17 +134,13 @@ void ShowScreensaver()
     UpdateWindow(hwndSaver);
 }
 
-
-// -------------------- Основное окно --------------------
 LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
     switch (msg)
     {
     case WM_CREATE:
     {
-        SetTimer(hwnd, 1, 1000, NULL); // Таймер неактивности (1 секунда)
-
-        // ----- Меню -----
+        SetTimer(hwnd, 1, 1000, NULL);
         HMENU hMenubar = CreateMenu();
         HMENU hFile = CreateMenu();
         HMENU hEdit = CreateMenu();
@@ -181,12 +176,12 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
     case WM_MOUSEMOVE:
     case WM_KEYDOWN:
     case WM_LBUTTONDOWN:
-        idleSeconds = 0; // Сбрасываем таймер
+        idleSeconds = 0;
         return 0;
 
     case WM_TIMER:
         idleSeconds++;
-        if (idleSeconds >= 2 && !sc_showed) // 30 секунд неактивности
+        if (idleSeconds >= 6 && !sc_showed)
         {
             sc_showed = true;
             idleSeconds = 0;
@@ -203,10 +198,9 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
     }
 }
 
-// -------------------- Точка входа --------------------
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-    g_hInstance = hInstance; // Сохраняем глобально для ShowScreensaver
+    g_hInstance = hInstance;
 
     WNDCLASSEX wc = { 0 };
     wc.cbSize = sizeof(WNDCLASSEX);
