@@ -1,9 +1,9 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\artur\\OneDrive\\Dokumente\\unik\\SP_TextEditor\\TextEditor\\",
+  "WorkspaceRootPath": "C:\\Users\\artur\\Documents\\Artur\\Unik3_github\\SP_TextEditor\\TextEditor\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{5627F6DE-D754-4369-97FB-8000CD61521C}|TextEditor\\TextEditor.vcxproj|C:\\Users\\artur\\OneDrive\\Dokumente\\unik\\SP_TextEditor\\TextEditor\\TextEditor\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{5627F6DE-D754-4369-97FB-8000CD61521C}|TextEditor\\TextEditor.vcxproj|C:\\Users\\artur\\Documents\\Artur\\Unik3_github\\SP_TextEditor\\TextEditor\\TextEditor\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{5627F6DE-D754-4369-97FB-8000CD61521C}|TextEditor\\TextEditor.vcxproj|solutionrelative:TextEditor\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
@@ -20,11 +20,11 @@
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "main.cpp",
-              "DocumentMoniker": "C:\\Users\\artur\\OneDrive\\Dokumente\\unik\\SP_TextEditor\\TextEditor\\TextEditor\\main.cpp",
+              "DocumentMoniker": "C:\\Users\\artur\\Documents\\Artur\\Unik3_github\\SP_TextEditor\\TextEditor\\TextEditor\\main.cpp",
               "RelativeDocumentMoniker": "TextEditor\\main.cpp",
-              "ToolTip": "C:\\Users\\artur\\OneDrive\\Dokumente\\unik\\SP_TextEditor\\TextEditor\\TextEditor\\main.cpp",
+              "ToolTip": "C:\\Users\\artur\\Documents\\Artur\\Unik3_github\\SP_TextEditor\\TextEditor\\TextEditor\\main.cpp",
               "RelativeToolTip": "TextEditor\\main.cpp",
-              "ViewState": "AgIAAEsAAAAAAAAAAAAAABkAAAAPAAAAAAAAAA==",
+              "ViewState": "AgIAAO0AAAAAAAAAAAAcwPQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-09-02T10:21:08.238Z",
               "EditorCaption": ""
