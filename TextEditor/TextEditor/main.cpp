@@ -308,11 +308,10 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
             ShowScreensaver();
         }
         return 0;
-
-    case WM_DESTROY:
-        if (isModified) {
+    case WM_CLOSE:
+        if (isModified || (!isModified && GetWindowTextLengthW(hEdit)>0)) {
             int res = MessageBoxW(hwnd,
-                L"Файл был изменён. Сохранить изменения?",
+                L"Сохранить изменения перед выходом?",
                 L"Выход",
                 MB_YESNOCANCEL | MB_ICONQUESTION);
 
@@ -331,21 +330,22 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                     SaveEditToFile(hEdit, szFile);
                 }
                 isModified = false;
-                DestroyWindow(hwnd);
+                DestroyWindow(hwnd); // теперь корректно
             }
             else if (res == IDNO) {
                 DestroyWindow(hwnd); // закрываем без сохранения
             }
             else if (res == IDCANCEL) {
-                DestroyWindow(hwnd);
-                return 0; // не закрываем
+                return 0; // просто выходим из WM_CLOSE — окно останется открытым
             }
         }
         else {
-            DestroyWindow(hwnd); // ничего не менялось
+            DestroyWindow(hwnd);
         }
         break;
-
+    case WM_DESTROY:
+        PostQuitMessage(0);
+        break;
     default:
         return DefWindowProc(hwnd, msg, wParam, lParam);
     }
