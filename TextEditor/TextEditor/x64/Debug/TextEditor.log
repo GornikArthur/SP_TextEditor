@@ -1,2 +1,3 @@
 ﻿  main.cpp
+C:\Users\artur\Documents\Artur\Unik3_github\SP_TextEditor\TextEditor\TextEditor\main.cpp(352,1): warning C4715: 'WndProc': not all control paths return a value
   TextEditor.vcxproj -> C:\Users\artur\Documents\Artur\Unik3_github\SP_TextEditor\TextEditor\x64\Debug\TextEditor.exe

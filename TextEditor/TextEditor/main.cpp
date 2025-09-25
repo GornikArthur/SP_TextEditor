@@ -4,6 +4,7 @@
 int idleSeconds = 0;          
 bool sc_showed = false;
 HINSTANCE g_hInstance = NULL; 
+bool isModified = false;
 
 LRESULT CALLBACK ScreenSaverProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
@@ -102,7 +103,6 @@ LRESULT CALLBACK ScreenSaverProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
     return DefWindowProc(hwnd, msg, wParam, lParam);
 }
 
-
 void ShowScreensaver()
 {
     static bool classRegistered = false;
@@ -162,6 +162,7 @@ void LoadFileToEdit(HWND hwndEdit, LPCWSTR fileName) {
     }
     HeapFree(GetProcessHeap(), 0, buffer);
     CloseHandle(hFile);
+    isModified = true;
 }
 
 void SaveEditToFile(HWND hwndEdit, LPCWSTR fileName) {
@@ -188,6 +189,7 @@ void SaveEditToFile(HWND hwndEdit, LPCWSTR fileName) {
 
     HeapFree(GetProcessHeap(), 0, buffer);
     HeapFree(GetProcessHeap(), 0, utf8buffer);
+    isModified = true;
 }
 
 HWND hEdit = NULL;
@@ -308,8 +310,41 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
         return 0;
 
     case WM_DESTROY:
-        PostQuitMessage(0);
-        return 0;
+        if (isModified) {
+            int res = MessageBoxW(hwnd,
+                L"Файл был изменён. Сохранить изменения?",
+                L"Выход",
+                MB_YESNOCANCEL | MB_ICONQUESTION);
+
+            if (res == IDYES) {
+                OPENFILENAME ofn;
+                wchar_t szFile[MAX_PATH] = { 0 };
+                ZeroMemory(&ofn, sizeof(ofn));
+                ofn.lStructSize = sizeof(ofn);
+                ofn.hwndOwner = hwnd;
+                ofn.lpstrFile = szFile;
+                ofn.nMaxFile = MAX_PATH;
+                ofn.lpstrFilter = L"Текстовые файлы\0*.txt\0Все файлы\0*.*\0";
+                ofn.nFilterIndex = 1;
+                ofn.Flags = OFN_PATHMUSTEXIST | OFN_OVERWRITEPROMPT;
+                if (GetSaveFileNameW(&ofn)) {
+                    SaveEditToFile(hEdit, szFile);
+                }
+                isModified = false;
+                DestroyWindow(hwnd);
+            }
+            else if (res == IDNO) {
+                DestroyWindow(hwnd); // закрываем без сохранения
+            }
+            else if (res == IDCANCEL) {
+                DestroyWindow(hwnd);
+                return 0; // не закрываем
+            }
+        }
+        else {
+            DestroyWindow(hwnd); // ничего не менялось
+        }
+        break;
 
     default:
         return DefWindowProc(hwnd, msg, wParam, lParam);
